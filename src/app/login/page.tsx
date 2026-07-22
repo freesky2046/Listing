@@ -1,8 +1,35 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newErrors: { email?: string; password?: string } = {};
+    if (!email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+    if (!password) {
+      newErrors.password = "Password is required";
+    }
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
+    // TODO: auth logic
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       {/* Subtle ambient glow */}
@@ -22,7 +49,7 @@ export default function LoginPage() {
           Welcome back. Enter your credentials to continue.
         </p>
 
-        <div className="mt-8 space-y-4">
+        <form onSubmit={handleSubmit} noValidate className="mt-8 space-y-4">
           {/* Google Sign-In */}
           <button
             type="button"
@@ -62,33 +89,50 @@ export default function LoginPage() {
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">
-              Email
-            </label>
-            <div className="h-10 w-full rounded-lg border border-border bg-card px-3 flex items-center">
-              <span className="text-sm text-muted-foreground">
-                you@example.com
-              </span>
-            </div>
+            <Label htmlFor="email" className="mb-1.5 block text-sm font-medium text-foreground">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setErrors((prev) => ({ ...prev, email: undefined })); }}
+              className="h-10 bg-card"
+            />
+            {errors.email && (
+              <p className="mt-1.5 text-xs text-destructive">{errors.email}</p>
+            )}
           </div>
 
           {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">
-              Password
-            </label>
-            <div className="h-10 w-full rounded-lg border border-border bg-card px-3 flex items-center">
-              <span className="text-sm text-muted-foreground">
-                &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
-              </span>
-            </div>
+            <Label htmlFor="password" className="mb-1.5 block text-sm font-medium text-foreground">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => { setPassword(e.target.value); setErrors((prev) => ({ ...prev, password: undefined })); }}
+              className="h-10 bg-card"
+            />
+            {errors.password && (
+              <p className="mt-1.5 text-xs text-destructive">{errors.password}</p>
+            )}
           </div>
 
           <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
-              <div className="size-4 rounded border border-border bg-card" />
-              Remember me
-            </label>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="remember"
+                checked={remember}
+                onCheckedChange={(checked) => setRemember(checked === true)}
+              />
+              <label
+                htmlFor="remember"
+                className="text-sm text-muted-foreground cursor-pointer select-none"
+              >
+                Remember me
+              </label>
+            </div>
             <Link
               href="/forgot-password"
               className="text-sm text-primary font-medium hover:underline"
@@ -97,8 +141,10 @@ export default function LoginPage() {
             </Link>
           </div>
 
-          <Button variant="default" className="h-11 w-full">Sign in</Button>
-        </div>
+          <Button type="submit" variant="default" className="h-11 w-full">
+            Sign in
+          </Button>
+        </form>
 
         <p className="mt-6 text-sm text-center text-muted-foreground">
           Don&apos;t have an account?{" "}

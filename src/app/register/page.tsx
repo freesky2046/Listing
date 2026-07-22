@@ -1,8 +1,63 @@
+"use client";
+
 import Link from "next/link";
+import { useState, useMemo } from "react";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Check, X } from "lucide-react";
+
+interface FieldErrors {
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
+const PASSWORD_RULES = [
+  { key: "minLength", label: "At least 8 characters", test: (pw: string) => pw.length >= 8 },
+  { key: "uppercase", label: "One uppercase letter", test: (pw: string) => /[A-Z]/.test(pw) },
+  { key: "lowercase", label: "One lowercase letter", test: (pw: string) => /[a-z]/.test(pw) },
+  { key: "number", label: "One number", test: (pw: string) => /[0-9]/.test(pw) },
+] as const;
 
 export default function RegisterPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const [focused, setFocused] = useState(false);
+
+  const passwordChecks = useMemo(
+    () => PASSWORD_RULES.map((rule) => ({ ...rule, passed: rule.test(password) })),
+    [password]
+  );
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newErrors: FieldErrors = {};
+
+    if (!name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!password) {
+      newErrors.password = "Password is required";
+    } else if (passwordChecks.some((c) => !c.passed)) {
+      newErrors.password = "Password doesn't meet all requirements";
+    }
+
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
+    // TODO: auth logic
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       {/* Subtle ambient glow */}
@@ -22,7 +77,7 @@ export default function RegisterPage() {
           Get started with your free account. No credit card required.
         </p>
 
-        <div className="mt-8 space-y-4">
+        <form onSubmit={handleSubmit} noValidate className="mt-8 space-y-4">
           {/* Google Sign-Up */}
           <button
             type="button"
@@ -60,38 +115,79 @@ export default function RegisterPage() {
             <div className="h-px flex-1 bg-border" />
           </div>
 
+          {/* Full name */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">
-              Full name
-            </label>
-            <div className="h-10 w-full rounded-lg border border-border bg-card px-3 flex items-center">
-              <span className="text-sm text-muted-foreground">
-                John Doe
-              </span>
-            </div>
+            <Label htmlFor="name" className="mb-1.5 block text-sm font-medium text-foreground">Full name</Label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="John Doe"
+              value={name}
+              onChange={(e) => { setName(e.target.value); setErrors((prev) => ({ ...prev, name: undefined })); }}
+              className="h-10 bg-card"
+            />
+            {errors.name && (
+              <p className="mt-1.5 text-xs text-destructive">{errors.name}</p>
+            )}
           </div>
+
+          {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">
-              Email
-            </label>
-            <div className="h-10 w-full rounded-lg border border-border bg-card px-3 flex items-center">
-              <span className="text-sm text-muted-foreground">
-                you@example.com
-              </span>
-            </div>
+            <Label htmlFor="email" className="mb-1.5 block text-sm font-medium text-foreground">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setErrors((prev) => ({ ...prev, email: undefined })); }}
+              className="h-10 bg-card"
+            />
+            {errors.email && (
+              <p className="mt-1.5 text-xs text-destructive">{errors.email}</p>
+            )}
           </div>
+
+          {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">
-              Password
-            </label>
-            <div className="h-10 w-full rounded-lg border border-border bg-card px-3 flex items-center">
-              <span className="text-sm text-muted-foreground">
-                &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
-              </span>
-            </div>
+            <Label htmlFor="password" className="mb-1.5 block text-sm font-medium text-foreground">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => { setPassword(e.target.value); setErrors((prev) => ({ ...prev, password: undefined })); }}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              className="h-10 bg-card"
+            />
+            {errors.password && (
+              <p className="mt-1.5 text-xs text-destructive">{errors.password}</p>
+            )}
+            {(focused || password.length > 0) && !errors.password && (
+              <div className="mt-2.5 space-y-1.5">
+                {passwordChecks.map((rule) => (
+                  <div
+                    key={rule.key}
+                    className="flex items-center gap-2 text-xs"
+                  >
+                    {rule.passed ? (
+                      <Check className="size-3.5 text-success shrink-0" />
+                    ) : (
+                      <X className="size-3.5 text-muted-foreground/40 shrink-0" />
+                    )}
+                    <span className={rule.passed ? "text-success" : "text-muted-foreground"}>
+                      {rule.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-          <Button variant="default" className="h-11 w-full">Create account</Button>
-        </div>
+
+          <Button type="submit" variant="default" className="h-11 w-full">
+            Create account
+          </Button>
+        </form>
 
         <p className="mt-6 text-sm text-center text-muted-foreground">
           Already have an account?{" "}

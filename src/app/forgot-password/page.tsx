@@ -1,8 +1,29 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function ForgotPasswordPage() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      setError("Email is required");
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+    // TODO: send reset link
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       {/* Subtle ambient glow */}
@@ -23,19 +44,25 @@ export default function ForgotPasswordPage() {
           password.
         </p>
 
-        <div className="mt-8 space-y-4">
+        <form onSubmit={handleSubmit} noValidate className="mt-8 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">
-              Email
-            </label>
-            <div className="h-10 w-full rounded-lg border border-border bg-card px-3 flex items-center">
-              <span className="text-sm text-muted-foreground">
-                you@example.com
-              </span>
-            </div>
+            <Label htmlFor="email" className="mb-1.5 block text-sm font-medium text-foreground">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setError(""); }}
+              className="h-10 bg-card"
+            />
+            {error && (
+              <p className="mt-1.5 text-xs text-destructive">{error}</p>
+            )}
           </div>
-          <Button variant="default" className="h-11 w-full">Send reset link</Button>
-        </div>
+          <Button type="submit" variant="default" className="h-11 w-full">
+            Send reset link
+          </Button>
+        </form>
 
         <p className="mt-6 text-sm text-center text-muted-foreground">
           <Link
