@@ -85,12 +85,6 @@ export default function ListingPage() {
           </Link>
           <div className="flex items-center gap-4">
             <Link
-              href="/dashboard"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Dashboard
-            </Link>
-            <Link
               href="/settings"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >

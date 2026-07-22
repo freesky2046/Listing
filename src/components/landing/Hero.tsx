@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Sparkles, Zap } from "lucide-react";
 
-export function Hero() {
+export function Hero({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-primary/[0.03] via-primary/[0.01] to-transparent">
       <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 sm:pt-32 sm:pb-28 lg:pt-40 lg:pb-32">
@@ -26,13 +26,23 @@ export function Hero() {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/register"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground text-base font-medium px-8 h-12 hover:opacity-90 transition-all duration-150"
-              >
-                Generate Your First Listing
-                <ArrowRight className="size-4" />
-              </Link>
+              {isLoggedIn ? (
+                <Link
+                  href="/listing"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground text-base font-medium px-8 h-12 hover:opacity-90 transition-all duration-150"
+                >
+                  Generate Your Listing
+                  <ArrowRight className="size-4" />
+                </Link>
+              ) : (
+                <Link
+                  href="/listing"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground text-base font-medium px-8 h-12 hover:opacity-90 transition-all duration-150"
+                >
+                  Generate Your First Listing
+                  <ArrowRight className="size-4" />
+                </Link>
+              )}
               <Link
                 href="#how-it-works"
                 className="inline-flex items-center justify-center rounded-lg border border-border bg-background text-foreground text-base font-medium px-8 h-12 hover:bg-card transition-all duration-150"

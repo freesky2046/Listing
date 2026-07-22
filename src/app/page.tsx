@@ -6,13 +6,17 @@ import { Pricing } from "@/components/landing/Pricing";
 import { FAQ } from "@/components/landing/FAQ";
 import { CTASection } from "@/components/landing/CTA";
 import { Footer } from "@/components/landing/Footer";
+import { auth } from "@/lib/auth/server";
 
-export default function Home() {
+export default async function Home() {
+  const result = await auth.getSession();
+  const isLoggedIn = !!result?.data?.user;
+
   return (
     <>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} />
       <main className="flex-1">
-        <Hero />
+        <Hero isLoggedIn={isLoggedIn} />
         <Features />
         <HowItWorks />
         <Pricing />

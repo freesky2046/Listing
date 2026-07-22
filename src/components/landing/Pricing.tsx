@@ -48,8 +48,8 @@ const plans = [
       "Advanced analytics",
       "Custom integrations",
     ],
-    cta: "Contact Sales",
-    href: "/contact",
+    cta: "Get Started Enterprise",
+    href: "/register?plan=enterprise",
     highlighted: false,
   },
 ];
