@@ -13,7 +13,7 @@ export function Hero() {
               AI-Powered Listing Generator
             </div>
 
-            <h1 className="text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.1] tracking-[-0.02em] text-foreground [text-wrap:balance]">
+            <h1 className="text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.15] tracking-[-0.02em] text-foreground [text-wrap:balance]">
               Generate Amazon listings
               <br />
               <span className="text-primary">in seconds, not hours</span>

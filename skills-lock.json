@@ -5,7 +5,13 @@
       "source": "pbakaus/impeccable",
       "sourceType": "github",
       "skillPath": ".agents/skills/impeccable/SKILL.md",
-      "computedHash": "acb7b8c15f55bc4709724fe25688582e270f698789da2077616d1b86dbeb6e5d"
+      "computedHash": "2122b0f39111478083909721ea39fdb52ed430a6a2c503e5fb64555c5fadb816"
+    },
+    "neon-auth": {
+      "source": "neondatabase/ai-rules",
+      "sourceType": "github",
+      "skillPath": "neon-plugin/skills/neon-auth/SKILL.md",
+      "computedHash": "693fd76e8fbd52c28b73537dda48d222d360f1c4691ca7dc321e70c989ecbd79"
     }
   }
 }

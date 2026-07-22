@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "@neondatabase/auth/ui/tailwind";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -64,7 +65,7 @@
   --popover-foreground: oklch(0.15 0.006 255);
 
   /* Brand: Bright Blue */
-  --primary: oklch(0.55 0.190 255);
+  --primary: oklch(0.53 0.230 255);
   --primary-foreground: oklch(1 0 0);
 
   /* Neutral */
@@ -74,38 +75,38 @@
   --muted-foreground: oklch(0.52 0.004 255);
 
   /* Accent: Warm Coral */
-  --accent: oklch(0.60 0.160 50);
+  --accent: oklch(0.57 0.200 50);
   --accent-foreground: oklch(1 0 0);
 
   /* Semantic */
-  --destructive: oklch(0.50 0.180 25);
+  --destructive: oklch(0.47 0.205 25);
   --destructive-foreground: oklch(1 0 0);
-  --success: oklch(0.58 0.150 150);
+  --success: oklch(0.55 0.180 150);
   --success-foreground: oklch(1 0 0);
-  --warning: oklch(0.65 0.170 70);
+  --warning: oklch(0.61 0.205 70);
   --warning-foreground: oklch(1 0 0);
 
   /* Borders & Inputs */
   --border: oklch(0.88 0.003 255);
   --input: oklch(0.88 0.003 255);
-  --ring: oklch(0.55 0.190 255);
+  --ring: oklch(0.53 0.230 255);
 
   /* Sidebar */
   --sidebar: oklch(0.97 0.003 255);
   --sidebar-foreground: oklch(0.15 0.006 255);
-  --sidebar-primary: oklch(0.55 0.190 255);
+  --sidebar-primary: oklch(0.53 0.230 255);
   --sidebar-primary-foreground: oklch(1 0 0);
   --sidebar-accent: oklch(0.95 0.005 255);
   --sidebar-accent-foreground: oklch(0.15 0.006 255);
   --sidebar-border: oklch(0.88 0.003 255);
-  --sidebar-ring: oklch(0.55 0.190 255);
+  --sidebar-ring: oklch(0.53 0.230 255);
 
   /* Charts */
-  --chart-1: oklch(0.55 0.190 255);
-  --chart-2: oklch(0.60 0.160 50);
-  --chart-3: oklch(0.65 0.120 255);
-  --chart-4: oklch(0.70 0.100 50);
-  --chart-5: oklch(0.40 0.150 255);
+  --chart-1: oklch(0.53 0.230 255);
+  --chart-2: oklch(0.57 0.200 50);
+  --chart-3: oklch(0.61 0.165 255);
+  --chart-4: oklch(0.65 0.145 50);
+  --chart-5: oklch(0.38 0.190 255);
 }
 
 @layer base {

@@ -4,17 +4,17 @@
 name: "AI Amazon Listing Generator"
 description: "极速生成高质量亚马逊 Listing 的 AI SaaS 工具"
 colors:
-  primary: "#2563eb"
-  primary-hover: "#1d4ed8"
-  accent: "#ea580c"
+  primary: "#2b53f0"
+  primary-hover: "#1e3fcc"
+  accent: "#e64d03"
   ink: "#1a1c24"
   muted: "#676b7c"
   border: "#dddfe3"
   bg: "#ffffff"
   surface: "#f4f5f7"
-  success: "#16a34a"
-  warning: "#d97706"
-  error: "#dc2626"
+  success: "#119d3e"
+  warning: "#ce6c02"
+  error: "#d11a1f"
 typography:
   display:
     fontFamily: "Inter, system-ui, -apple-system, sans-serif"
@@ -103,10 +103,10 @@ This system explicitly rejects decorative flourish: no gradient text, no glassmo
 The palette is built around a bright blue primary and a warm coral accent, grounded by pure white and near-black ink. Every color has a specific functional role; nothing is decorative.
 
 ### Primary
-- **Bright Blue** (oklch(0.55 0.190 255) / #2563eb): The brand's single saturated voice. Used on primary buttons, active navigation states, key interactive elements, and the primary CTA. Always paired with white text. Appears on ≤10% of any screen — its restraint is the point.
+- **Bright Blue** (oklch(0.53 0.230 255) / #2b53f0): The brand's single saturated voice. Used on primary buttons, active navigation states, key interactive elements, and the primary CTA. Always paired with white text. Appears on ≤10% of any screen — its restraint is the point.
 
 ### Accent
-- **Warm Coral** (oklch(0.60 0.160 50) / #ea580c): A warm counterpoint to the cool blue. Used for status badges, notification indicators, secondary highlights, and pricing-tier accents. Saturated enough to read as intentional, warm enough to feel approachable. White text on filled badges.
+- **Warm Coral** (oklch(0.57 0.200 50) / #e64d03): A warm counterpoint to the cool blue. Used for status badges, notification indicators, secondary highlights, and pricing-tier accents. Saturated enough to read as intentional, warm enough to feel approachable. White text on filled badges.
 
 ### Neutral
 - **Pure White** (oklch(1.00 0.000 0) / #ffffff): The background. No hidden warmth, no tint. The brand personality lives in blue and coral, not in the surface.
@@ -116,9 +116,9 @@ The palette is built around a bright blue primary and a warm coral accent, groun
 - **Border** (oklch(0.88 0.003 255) / #dddfe3): Divider lines, input borders, card strokes. Light enough to recede, present enough to define edges.
 
 ### Semantic
-- **Success Green** (oklch(0.58 0.150 150) / #16a34a): Listing published, generation complete, positive status.
-- **Warning Amber** (oklch(0.65 0.170 70) / #d97706): Listing needs review, quota warning.
-- **Error Red** (oklch(0.50 0.180 25) / #dc2626): Generation failed, validation errors, destructive actions.
+- **Success Green** (oklch(0.55 0.180 150) / #119d3e): Listing published, generation complete, positive status.
+- **Warning Amber** (oklch(0.61 0.205 70) / #ce6c02): Listing needs review, quota warning.
+- **Error Red** (oklch(0.47 0.205 25) / #d11a1f): Generation failed, validation errors, destructive actions.
 
 ### Named Rules
 **The One Voice Rule.** The bright blue primary is used on ≤10% of any given screen. Its rarity is the point. If more than one in ten interactive elements carries the primary color, the palette has lost its restraint.
