@@ -49,6 +49,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       stripeSubscriptionId: sub.id,
       stripePriceId: sub.items.data[0]?.price.id,
       status: sub.status,
+      currentPeriodEnd: nextBillingDate(sub),
       cancelAtPeriodEnd: sub.cancel_at_period_end,
     },
     create: {
@@ -57,6 +58,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       stripeSubscriptionId: sub.id,
       stripePriceId: sub.items.data[0]?.price.id,
       status: sub.status,
+      currentPeriodEnd: nextBillingDate(sub),
       cancelAtPeriodEnd: sub.cancel_at_period_end,
     },
   });
@@ -73,6 +75,7 @@ async function handleSubscriptionUpdated(sub: Stripe.Subscription) {
     data: {
       stripePriceId: sub.items.data[0]?.price.id,
       status: sub.status,
+      currentPeriodEnd: nextBillingDate(sub),
       cancelAtPeriodEnd: sub.cancel_at_period_end,
     },
   });
@@ -87,4 +90,32 @@ async function handleSubscriptionDeleted(sub: Stripe.Subscription) {
       stripeSubscriptionId: null,
     },
   });
+}
+
+function nextBillingDate(sub: Stripe.Subscription): Date | undefined {
+  if (!sub.start_date) return undefined;
+  const price = sub.items.data[0]?.price;
+  if (!price?.recurring) return undefined;
+  const now = Math.floor(Date.now() / 1000);
+  const interval = price.recurring.interval;
+  const intervalCount = price.recurring.interval_count ?? 1;
+  const secondsPerDay = 86400;
+  const secondsPerMonth = 30 * secondsPerDay;
+  const secondsPerYear = 365 * secondsPerDay;
+
+  let step: number;
+  switch (interval) {
+    case "day": step = intervalCount * secondsPerDay; break;
+    case "week": step = intervalCount * 7 * secondsPerDay; break;
+    case "month": step = intervalCount * secondsPerMonth; break;
+    case "year": step = intervalCount * secondsPerYear; break;
+    default: return undefined;
+  }
+
+  // 从 start_date 开始，不断加 interval，找到超过 now 的第一个日期
+  let next = sub.start_date;
+  while (next <= now) {
+    next += step;
+  }
+  return new Date(next * 1000);
 }

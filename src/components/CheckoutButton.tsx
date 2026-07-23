@@ -8,7 +8,7 @@ export function CheckoutButton({
   label,
   highlighted,
 }: {
-  priceId: string;
+  priceId?: string;
   label: string;
   highlighted?: boolean;
 }) {
@@ -16,6 +16,7 @@ export function CheckoutButton({
   const [loading, setLoading] = useState(false);
 
   async function handleClick() {
+    if (!priceId) return;
     setLoading(true);
     const res = await fetch("/api/stripe/checkout", {
       method: "POST",
