@@ -19,6 +19,15 @@ export async function POST(req: NextRequest) {
     where: { userId: session.userId },
   });
 
+  // 已经是 VIP → 跳转 Customer Portal 而非 Checkout
+  if (sub?.status === "active" || sub?.status === "trialing") {
+    const portalSession = await stripe.billingPortal.sessions.create({
+      customer: sub.stripeCustomerId!,
+      return_url: `${req.nextUrl.origin}/settings`,
+    });
+    return NextResponse.json({ url: portalSession.url });
+  }
+
   let stripeCustomerId = sub?.stripeCustomerId ?? undefined;
 
   if (!stripeCustomerId) {
