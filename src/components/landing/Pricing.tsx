@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Check } from "lucide-react";
+import { CheckoutButton } from "@/components/CheckoutButton";
 
 const plans = [
   {
@@ -31,7 +32,7 @@ const plans = [
       "Bulk listing generation",
     ],
     cta: "Start Pro Trial",
-    href: "/register?plan=pro",
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID!,
     highlighted: true,
   },
   {
@@ -49,7 +50,7 @@ const plans = [
       "Custom integrations",
     ],
     cta: "Get Started Enterprise",
-    href: "/register?plan=enterprise",
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_ENTERPRISE_PRICE_ID!,
     highlighted: false,
   },
 ];
@@ -117,16 +118,24 @@ export function Pricing() {
                 ))}
               </ul>
 
-              <Link
-                href={plan.href}
-                className={`mt-8 inline-flex items-center justify-center rounded-lg text-sm font-medium px-6 h-11 w-full transition-all duration-150 ${
-                  plan.highlighted
-                    ? "bg-primary text-primary-foreground hover:opacity-90"
-                    : "border border-border bg-background text-foreground hover:bg-card"
-                }`}
-              >
-                {plan.cta}
-              </Link>
+              {"stripePriceId" in plan ? (
+                <CheckoutButton
+                  priceId={plan.stripePriceId}
+                  label={plan.cta}
+                  highlighted={plan.highlighted}
+                />
+              ) : (
+                <Link
+                  href={plan.href}
+                  className={`mt-8 inline-flex items-center justify-center rounded-lg text-sm font-medium px-6 h-11 w-full transition-all duration-150 ${
+                    plan.highlighted
+                      ? "bg-primary text-primary-foreground hover:opacity-90"
+                      : "border border-border bg-background text-foreground hover:bg-card"
+                  }`}
+                >
+                  {plan.cta}
+                </Link>
+              )}
             </div>
           ))}
         </div>

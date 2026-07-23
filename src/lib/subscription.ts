@@ -1,33 +1,29 @@
 import { db } from "@/lib/db";
 
-export type PlanType = "free" | "pro" | "enterprise";
+/** Stripe Price ID → 套餐名称映射，随你在 Stripe Dashboard 创建后填入 */
+export const PLANS: Record<string, { name: string }> = {
+  // price_xxx: { name: "Pro" },
+  // price_yyy: { name: "Enterprise" },
+};
 
-/** 获取用户订阅，不存在则自动创建 Free */
+/** 获取或创建用户订阅记录（默认 free） */
 export async function getOrCreateSubscription(userId: string) {
   let sub = await db.subscription.findUnique({ where: { userId } });
 
   if (!sub) {
     sub = await db.subscription.create({
-      data: { userId, plan: "free" },
+      data: { userId, status: "free" },
     });
   }
 
   return sub;
 }
 
-/** 获取用户当前计划 */
-export async function getUserPlan(
-  userId: string,
-): Promise<PlanType> {
-  const sub = await getOrCreateSubscription(userId);
-  return sub.plan as PlanType;
+export function getPlanName(stripePriceId: string | null | undefined) {
+  if (!stripePriceId) return "Free";
+  return PLANS[stripePriceId]?.name ?? "Unknown";
 }
 
-/** 升级用户计划 */
-export async function upgradePlan(userId: string, plan: PlanType) {
-  return db.subscription.upsert({
-    where: { userId },
-    update: { plan },
-    create: { userId, plan },
-  });
+export function isActive(sub: { status: string } | null) {
+  return sub?.status === "active" || sub?.status === "trialing";
 }

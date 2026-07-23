@@ -14,8 +14,9 @@
       "computedHash": "693fd76e8fbd52c28b73537dda48d222d360f1c4691ca7dc321e70c989ecbd79"
     },
     "stripe-best-practices": {
-      "source": "docs.stripe.com",
-      "sourceType": "well-known",
+      "source": "stripe/ai",
+      "sourceType": "github",
+      "skillPath": "skills/stripe-best-practices/SKILL.md",
       "computedHash": "8a27483a9cfdeaa83f45cd489d3d7f5fd7b7690f7d7fba4a944b92a4535bf73c"
     }
   }

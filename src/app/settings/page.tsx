@@ -1,22 +1,9 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth/server";
 import { SignOutButton } from "@/components/SignOutButton";
-import { getOrCreateSubscription } from "@/lib/subscription";
+import { getOrCreateSubscription, getPlanName } from "@/lib/subscription";
 import { ArrowUpRight, ArrowLeft } from "lucide-react";
-import { upgradeAction } from "./actions";
-
-const PLAN_LABELS: Record<string, string> = {
-  free: "Free",
-  pro: "Pro",
-  enterprise: "Enterprise",
-};
-
-const PLAN_PRICES: Record<string, string> = {
-  free: "$0",
-  pro: "$29",
-  enterprise: "$99",
-};
-
+import { manageSubscriptionAction } from "./actions";
 export default async function SettingsPage() {
   const result = await auth.getSession();
   const user = result?.data?.user ?? null;
@@ -52,34 +39,24 @@ export default async function SettingsPage() {
             <div className="flex items-center justify-between">
               <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Plan</h2>
               <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
-                {PLAN_LABELS[sub.plan] ?? sub.plan}
+                {getPlanName(sub.stripePriceId)}
               </span>
             </div>
-            <div className="flex items-baseline justify-between">
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-foreground">{PLAN_PRICES[sub.plan] ?? "—"}</p>
-                <p className="text-xs text-muted-foreground">per month</p>
-              </div>
-              <span className="text-sm text-muted-foreground">Monthly</span>
-            </div>
-            {sub.plan === "free" && (
-              <form action={upgradeAction.bind(null, user!.id, "pro")}>
+            {sub.status === "free" ? (
+              <Link
+                href="/pricing"
+                className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-colors"
+              >
+                View Plans
+                <ArrowUpRight className="size-3" />
+              </Link>
+            ) : (
+              <form action={manageSubscriptionAction}>
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-1 text-xs font-medium text-destructive hover:underline transition-colors"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-colors"
                 >
-                  Upgrade
-                  <ArrowUpRight className="size-3" />
-                </button>
-              </form>
-            )}
-            {sub.plan === "pro" && (
-              <form action={upgradeAction.bind(null, user!.id, "enterprise")}>
-                <button
-                  type="submit"
-                  className="inline-flex items-center gap-1 text-xs font-medium text-destructive hover:underline transition-colors"
-                >
-                  Upgrade to Enterprise
+                  Manage Subscription
                   <ArrowUpRight className="size-3" />
                 </button>
               </form>

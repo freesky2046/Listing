@@ -1,10 +1,12 @@
 "use server";
 
-import { upgradePlan } from "@/lib/subscription";
-import type { PlanType } from "@/lib/subscription";
-import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
-export async function upgradeAction(userId: string, plan: PlanType) {
-  await upgradePlan(userId, plan);
-  revalidatePath("/settings");
+export async function manageSubscriptionAction() {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const res = await fetch(`${baseUrl}/api/stripe/portal`, { method: "POST" });
+  const data = await res.json();
+  if (data.url) {
+    redirect(data.url);
+  }
 }
