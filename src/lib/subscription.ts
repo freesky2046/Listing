@@ -2,8 +2,8 @@ import { db } from "@/lib/db";
 
 /** Stripe Price ID → 套餐名称映射，随你在 Stripe Dashboard 创建后填入 */
 export const PLANS: Record<string, { name: string }> = {
-  // price_xxx: { name: "Pro" },
-  // price_yyy: { name: "Enterprise" },
+  price_1Ttkg8FqNlRS41IKveeEg5cR: { name: "Pro" },
+  price_1TwK42FqNlRS41IKVTImIvBq: { name: "Enterprise" },
 };
 
 /** 获取或创建用户订阅记录（默认 free） */
