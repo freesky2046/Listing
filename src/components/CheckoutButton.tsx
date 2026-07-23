@@ -29,7 +29,7 @@ export function CheckoutButton({
     }
     const data = await res.json();
     if (data.url) {
-      router.push(data.url);
+      window.location.href = data.url;
     }
   }
 
