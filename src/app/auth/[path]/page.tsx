@@ -24,7 +24,7 @@ export default async function AuthPage({
           ListGen
         </span>
       </div>
-      <AuthView pathname={path} />
+      <AuthView pathname={path} socialLayout="vertical" callbackURL="/" />
       <Link
         href="/"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"

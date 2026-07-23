@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-export function CTASection() {
+export function CTASection({ hasActivePlan = false }: { hasActivePlan?: boolean }) {
   return (
     <section className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6">
@@ -18,7 +18,7 @@ export function CTASection() {
 
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="/register"
+                href="/listing"
                 className="inline-flex items-center gap-2 rounded-lg bg-primary text-primary-foreground text-base font-medium px-8 h-12 hover:opacity-90 transition-all duration-150"
               >
                 Generate Your First Listing
@@ -32,9 +32,11 @@ export function CTASection() {
               </Link>
             </div>
 
-            <p className="mt-6 text-sm text-muted-foreground">
-              Free plan includes 5 listings per month. No credit card required.
-            </p>
+            {!hasActivePlan && (
+              <p className="mt-6 text-sm text-muted-foreground">
+                Free plan includes 5 listings per month. No credit card required.
+              </p>
+            )}
           </div>
         </div>
       </div>

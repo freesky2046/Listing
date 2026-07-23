@@ -24,7 +24,7 @@ export function CheckoutButton({
     setError(null);
 
     if (!session) {
-      router.push("/auth/signup");
+      router.push("/auth/sign-up");
       return;
     }
 

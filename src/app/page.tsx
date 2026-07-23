@@ -7,10 +7,15 @@ import { FAQ } from "@/components/landing/FAQ";
 import { CTASection } from "@/components/landing/CTA";
 import { Footer } from "@/components/landing/Footer";
 import { auth } from "@/lib/auth/server";
+import { getOrCreateSubscription, isActive } from "@/lib/subscription";
 
 export default async function Home() {
   const result = await auth.getSession();
-  const isLoggedIn = !!result?.data?.user;
+  const user = result?.data?.user ?? null;
+  const isLoggedIn = !!user;
+
+  const sub = user ? await getOrCreateSubscription(user.id) : null;
+  const hasActivePlan = isActive(sub);
 
   return (
     <>
@@ -21,7 +26,7 @@ export default async function Home() {
         <HowItWorks />
         <Pricing />
         <FAQ />
-        <CTASection />
+        <CTASection hasActivePlan={hasActivePlan} />
       </main>
       <Footer />
     </>
