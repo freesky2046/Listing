@@ -4,13 +4,14 @@ import { auth } from "@/lib/auth/server";
 import { db } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
-  const session = await auth.getSession();
-  if (!session?.userId) {
+  const result = await auth.getSession();
+  const user = result?.data?.user ?? null;
+  if (!user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const sub = await db.subscription.findUnique({
-    where: { userId: session.userId },
+    where: { userId: user.id },
   });
 
   const stripeCustomerId = sub?.stripeCustomerId;

@@ -4,8 +4,9 @@ import { auth } from "@/lib/auth/server";
 import { db } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
-  const session = await auth.getSession();
-  if (!session?.userId) {
+  const result = await auth.getSession();
+  const user = result?.data?.user ?? null;
+  if (!user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -16,7 +17,7 @@ export async function POST(req: NextRequest) {
 
   // 查找或创建 Stripe Customer
   let sub = await db.subscription.findUnique({
-    where: { userId: session.userId },
+    where: { userId: user.id },
   });
 
   // 已经是 VIP → 跳转 Customer Portal 而非 Checkout
@@ -32,14 +33,14 @@ export async function POST(req: NextRequest) {
 
   if (!stripeCustomerId) {
     const customer = await stripe.customers.create({
-      metadata: { userId: session.userId },
+      metadata: { userId: user.id },
     });
     stripeCustomerId = customer.id;
 
     await db.subscription.upsert({
-      where: { userId: session.userId },
+      where: { userId: user.id },
       update: { stripeCustomerId },
-      create: { userId: session.userId, stripeCustomerId, status: "free" },
+      create: { userId: user.id, stripeCustomerId, status: "free" },
     });
   }
 
@@ -49,7 +50,7 @@ export async function POST(req: NextRequest) {
     line_items: [{ price: priceId, quantity: 1 }],
     success_url: `${req.nextUrl.origin}/settings?checkout=success`,
     cancel_url: `${req.nextUrl.origin}/pricing`,
-    metadata: { userId: session.userId },
+    metadata: { userId: user.id },
     integration_identifier: `checkout-${crypto.randomUUID().slice(0, 8)}`,
   });
 
