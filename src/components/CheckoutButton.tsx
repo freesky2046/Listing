@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { authClient } from "@/lib/auth/client";
 
 export function CheckoutButton({
   priceId,
@@ -15,11 +16,17 @@ export function CheckoutButton({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { data: session } = authClient.useSession();
 
   async function handleClick() {
     if (!priceId) return;
     setLoading(true);
     setError(null);
+
+    if (!session) {
+      router.push("/auth/signup");
+      return;
+    }
 
     try {
       const res = await fetch("/api/stripe/checkout", {
@@ -27,11 +34,6 @@ export function CheckoutButton({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ priceId }),
       });
-
-      if (res.status === 401) {
-        router.push("/auth/login");
-        return;
-      }
 
       const data = await res.json();
 
