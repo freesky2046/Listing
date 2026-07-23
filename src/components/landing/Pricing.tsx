@@ -15,7 +15,7 @@ const plans = [
       "Standard search terms",
     ],
     cta: "Get Started Free",
-    href: "/register",
+    href: "/auth/signup",
     highlighted: false,
   },
   {
