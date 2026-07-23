@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { db } from "@/lib/db";
+import { getPlanLimit } from "@/lib/subscription";
 import Stripe from "stripe";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -43,23 +44,35 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     session.subscription as string,
   );
 
+  const priceId = sub.items.data[0]?.price.id;
+  const planLimit = getPlanLimit(priceId);
+
+  // 升级时重置已使用次数：只要 priceId 变了就是升级（Free->Pro, Free->Enterprise, Pro->Enterprise）
+  const existing = await db.subscription.findUnique({
+    where: { userId: session.metadata.userId },
+  });
+  const isUpgrade = existing && existing.stripePriceId && existing.stripePriceId !== priceId;
+
   await db.subscription.upsert({
     where: { userId: session.metadata.userId },
     update: {
       stripeSubscriptionId: sub.id,
-      stripePriceId: sub.items.data[0]?.price.id,
+      stripePriceId: priceId,
       status: sub.status,
       currentPeriodEnd: nextBillingDate(sub),
       cancelAtPeriodEnd: sub.cancel_at_period_end,
+      listingsLimit: planLimit,
+      listingsUsed: isUpgrade ? 0 : undefined,
     },
     create: {
       userId: session.metadata.userId,
       stripeCustomerId: session.customer as string,
       stripeSubscriptionId: sub.id,
-      stripePriceId: sub.items.data[0]?.price.id,
+      stripePriceId: priceId,
       status: sub.status,
       currentPeriodEnd: nextBillingDate(sub),
       cancelAtPeriodEnd: sub.cancel_at_period_end,
+      listingsLimit: planLimit,
     },
   });
 }
@@ -70,13 +83,21 @@ async function handleSubscriptionUpdated(sub: Stripe.Subscription) {
   });
   if (!subscription) return;
 
+  const priceId = sub.items.data[0]?.price.id;
+  const newLimit = getPlanLimit(priceId);
+
+  // 套餐变更（升级/降级）时重置已使用次数
+  const isPlanChange = subscription.stripePriceId && subscription.stripePriceId !== priceId;
+
   await db.subscription.update({
     where: { stripeSubscriptionId: sub.id },
     data: {
-      stripePriceId: sub.items.data[0]?.price.id,
+      stripePriceId: priceId,
       status: sub.status,
       currentPeriodEnd: nextBillingDate(sub),
       cancelAtPeriodEnd: sub.cancel_at_period_end,
+      listingsLimit: newLimit,
+      listingsUsed: isPlanChange ? 0 : undefined,
     },
   });
 }
@@ -88,6 +109,8 @@ async function handleSubscriptionDeleted(sub: Stripe.Subscription) {
       status: "canceled",
       stripePriceId: null,
       stripeSubscriptionId: null,
+      listingsLimit: 5,
+      listingsUsed: 0,
     },
   });
 }

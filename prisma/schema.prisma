@@ -8,13 +8,15 @@ datasource db {
 
 model Subscription {
   id                   String    @id @default(cuid())
-  userId               String    @unique // 关联 Neon Auth 用户 ID
-  stripeCustomerId     String?   @unique // Stripe 侧 Customer ID（cus_xxx）, 一旦设置就永久保留
-  stripeSubscriptionId String?   @unique // Stripe 侧 Subscription ID（sub_xxx） 只有 customer.subscription.deleted 会清空它。其余时候都有值。重新订阅会拿到新的 sub_xxx
-  stripePriceId        String?   // 当前订阅的 Stripe Price ID（price_xxx），通过 PLANS 映射得到套餐名
-  status               String    @default("free") // 订阅状态：free / incomplete / incomplete_expired / trialing / active / past_due / unpaid / canceled / paused
-  currentPeriodEnd     DateTime? // 当前计费周期截止日期，前端展示"下次续费日"用
-  cancelAtPeriodEnd    Boolean   @default(false) // 是否已在周期末取消（true 表示到期不续）
+  userId               String    @unique
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
+  stripePriceId        String?
+  status               String    @default("free")
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean   @default(false)
+  listingsUsed         Int       @default(0)
+  listingsLimit        Int       @default(5)
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 }

@@ -24,12 +24,6 @@ export function CTASection({ hasActivePlan = false }: { hasActivePlan?: boolean 
                 Generate Your First Listing
                 <ArrowRight className="size-4" />
               </Link>
-              <Link
-                href="#pricing"
-                className="inline-flex items-center rounded-lg border border-border bg-background text-foreground text-base font-medium px-8 h-12 hover:bg-card transition-all duration-150"
-              >
-                View Pricing
-              </Link>
             </div>
 
             {!hasActivePlan && (

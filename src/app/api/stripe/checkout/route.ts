@@ -16,11 +16,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing priceId" }, { status: 400 });
     }
 
-    let sub = await db.subscription.findUnique({
+    const sub = await db.subscription.findUnique({
       where: { userId: user.id },
     });
 
-    if (sub?.status === "active" || sub?.status === "trialing") {
+    // 已有活跃订阅且点击的是同一个 plan → 去 Billing Portal 管理
+    if (
+      (sub?.status === "active" || sub?.status === "trialing") &&
+      sub.stripePriceId === priceId
+    ) {
       const portalSession = await stripe.billingPortal.sessions.create({
         customer: sub.stripeCustomerId!,
         return_url: `${req.nextUrl.origin}/settings`,
@@ -47,8 +51,8 @@ export async function POST(req: NextRequest) {
       mode: "subscription",
       customer: stripeCustomerId,
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${req.nextUrl.origin}/settings?checkout=success`,
-      cancel_url: `${req.nextUrl.origin}/pricing`,
+      success_url: `${req.nextUrl.origin}/listing`,
+      cancel_url: `${req.nextUrl.origin}/#pricing`,
       metadata: { userId: user.id },
       integration_identifier: `checkout-${crypto.randomUUID().slice(0, 8)}`,
     });

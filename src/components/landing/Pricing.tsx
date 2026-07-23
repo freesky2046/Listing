@@ -32,7 +32,7 @@ const plans = [
       "Bulk listing generation",
     ],
     cta: "Start Pro Trial",
-    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID!,
+    priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID!,
     highlighted: true,
   },
   {
@@ -50,7 +50,7 @@ const plans = [
       "Custom integrations",
     ],
     cta: "Get Started Enterprise",
-    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_ENTERPRISE_PRICE_ID!,
+    priceId: process.env.NEXT_PUBLIC_STRIPE_ENTERPRISE_PRICE_ID!,
     highlighted: false,
   },
 ];
@@ -118,9 +118,9 @@ export function Pricing() {
                 ))}
               </ul>
 
-              {"stripePriceId" in plan ? (
+              {"priceId" in plan ? (
                 <CheckoutButton
-                  priceId={plan.stripePriceId}
+                  priceId={plan.priceId}
                   label={plan.cta}
                   highlighted={plan.highlighted}
                 />

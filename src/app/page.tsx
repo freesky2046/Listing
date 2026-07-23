@@ -24,7 +24,7 @@ export default async function Home() {
         <Hero isLoggedIn={isLoggedIn} />
         <Features />
         <HowItWorks />
-        <Pricing />
+        {!hasActivePlan && <Pricing />}
         <FAQ />
         <CTASection hasActivePlan={hasActivePlan} />
       </main>

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth/server";
 import { SignOutButton } from "@/components/SignOutButton";
-import { getOrCreateSubscription, getPlanName } from "@/lib/subscription";
-import { ArrowUpRight, ArrowLeft } from "lucide-react";
+import { getOrCreateSubscription, getPlanName, isActive } from "@/lib/subscription";
+import { ArrowUpRight, ArrowRight, ArrowLeft, Check, Zap, Clock } from "lucide-react";
 import { manageSubscriptionAction } from "./actions";
 export default async function SettingsPage() {
   const result = await auth.getSession();
@@ -11,6 +11,9 @@ export default async function SettingsPage() {
   const sub = user
     ? await getOrCreateSubscription(user.id)
     : null;
+
+  const active = isActive(sub);
+  const planName = getPlanName(sub?.stripePriceId);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -35,36 +38,93 @@ export default async function SettingsPage() {
         )}
 
         {sub && (
-          <div className="rounded-xl border border-border bg-card p-6 space-y-3">
+          <div className="rounded-xl border border-border bg-card p-6 space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Plan</h2>
-              <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
-                {getPlanName(sub.stripePriceId)}
-              </span>
+              {active && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-500">
+                  <Check className="size-3" />
+                  Active
+                </span>
+              )}
             </div>
-            {sub.status === "free" ? (
+
+            <div className="flex items-center gap-3">
+              <span className={`inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-semibold ${
+                active ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+              }`}>
+                {planName}
+              </span>
+              {sub.stripePriceId && (
+                <span className="text-sm text-muted-foreground">
+                  $29/month
+                </span>
+              )}
+            </div>
+
+            {active && sub.currentPeriodEnd && (
+              <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                <Clock className="size-4 mt-0.5 shrink-0" />
+                <span>
+                  Current period ends on{" "}
+                  <span className="font-medium text-foreground">
+                    {sub.currentPeriodEnd.toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </span>
+                </span>
+              </div>
+            )}
+
+            {active && (
+              <div className="border-t border-border pt-4">
+                <form action={manageSubscriptionAction}>
+                  <button
+                    type="submit"
+                    className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-colors"
+                  >
+                    Manage Subscription
+                    <ArrowUpRight className="size-3" />
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {!active && sub.status === "free" && (
               <Link
-                href="/pricing"
+                href="/#pricing"
                 className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-colors"
               >
                 View Plans
                 <ArrowUpRight className="size-3" />
               </Link>
-            ) : (
-              <form action={manageSubscriptionAction}>
-                <button
-                  type="submit"
-                  className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-colors"
-                >
-                  Manage Subscription
-                  <ArrowUpRight className="size-3" />
-                </button>
-              </form>
             )}
           </div>
         )}
 
-        {user && <SignOutButton />}
+        {user && (
+          <>
+            <Link
+              href="/listing"
+              className="flex items-center justify-between rounded-xl border border-primary/30 bg-primary/[0.04] p-5 hover:bg-primary/[0.08] transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex size-9 items-center justify-center rounded-lg bg-primary/10">
+                  <Zap className="size-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">Generate Listings</p>
+                  <p className="text-xs text-muted-foreground">Create AI-powered Amazon listings</p>
+                </div>
+              </div>
+              <ArrowRight className="size-4 text-muted-foreground" />
+            </Link>
+
+            <SignOutButton />
+          </>
+        )}
 
         <Link
           href="/"
