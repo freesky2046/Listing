@@ -49,7 +49,6 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       stripeSubscriptionId: sub.id,
       stripePriceId: sub.items.data[0]?.price.id,
       status: sub.status,
-      currentPeriodEnd: new Date(sub.current_period_end * 1000),
       cancelAtPeriodEnd: sub.cancel_at_period_end,
     },
     create: {
@@ -58,7 +57,6 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       stripeSubscriptionId: sub.id,
       stripePriceId: sub.items.data[0]?.price.id,
       status: sub.status,
-      currentPeriodEnd: new Date(sub.current_period_end * 1000),
       cancelAtPeriodEnd: sub.cancel_at_period_end,
     },
   });
@@ -75,7 +73,6 @@ async function handleSubscriptionUpdated(sub: Stripe.Subscription) {
     data: {
       stripePriceId: sub.items.data[0]?.price.id,
       status: sub.status,
-      currentPeriodEnd: new Date(sub.current_period_end * 1000),
       cancelAtPeriodEnd: sub.cancel_at_period_end,
     },
   });
