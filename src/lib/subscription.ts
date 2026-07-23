@@ -2,8 +2,8 @@ import { db } from "@/lib/db";
 
 /** Stripe Price ID → 套餐名称映射 */
 export const PLANS: Record<string, { name: string; limit: number }> = {
-  price_1Ttkg8FqNlRS41IKveeEg5cR: { name: "Pro", limit: 100 },
-  price_1TwK42FqNlRS41IKVTImIvBq: { name: "Enterprise", limit: 300 },
+  price_1Ttkg8FqNlRS41IKveeEg5cR: { name: "Pro", limit: 200 },
+  price_1TwK42FqNlRS41IKVTImIvBq: { name: "Enterprise", limit: 1000 },
 };
 
 /** 获取或创建用户订阅记录（默认 free） */

@@ -20,11 +20,11 @@ const plans = [
   },
   {
     name: "Pro",
-    price: "$29",
+    price: "$39",
     period: "/month",
     description: "For serious sellers who need volume and quality.",
     features: [
-      "100 listings per month",
+      "200 listings per month",
       "Advanced AI optimization",
       "A9 keyword analysis",
       "Multi-marketplace support",
@@ -41,7 +41,7 @@ const plans = [
     period: "/month",
     description: "For agencies and power sellers managing many products.",
     features: [
-      "Unlimited listings",
+      "1,000 listings per month",
       "Custom AI training",
       "API access",
       "Team collaboration",
