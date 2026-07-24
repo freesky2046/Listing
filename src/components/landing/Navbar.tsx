@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { authClient } from "@/lib/auth/client";
 
 const isHome = (pathname: string | null) => pathname === "/";
 
@@ -18,9 +19,12 @@ const navLinks = [
   { href: "#faq", label: "FAQ" },
 ];
 
-export function Navbar({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
+export function Navbar({ isLoggedIn: serverLoggedIn = false }: { isLoggedIn?: boolean }) {
   const pathname = usePathname();
+  const { data: session } = authClient.useSession();
   const [open, setOpen] = useState(false);
+
+  const isLoggedIn = session?.user ? true : serverLoggedIn;
 
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
