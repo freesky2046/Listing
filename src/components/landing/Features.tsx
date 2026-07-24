@@ -64,12 +64,12 @@ export function Features() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal staggerDelay={100}>
-          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <ScrollReveal>
+          <div className="reveal-item mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="reveal-item group rounded-xl border border-border bg-card p-8 hover:border-primary/40 hover:bg-primary/[0.06] hover:shadow-md transition-all duration-200"
+                className="group rounded-xl border border-border bg-card p-8 hover:border-primary/40 hover:bg-primary/[0.06] hover:shadow-md transition-all duration-200"
               >
                 <div className="inline-flex size-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <feature.icon className="size-5" />
