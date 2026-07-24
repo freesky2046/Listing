@@ -1,5 +1,17 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Logo } from "@/components/Logo";
+
+const isHome = (pathname: string | null) => pathname === "/";
+
+const resolveHref = (pathname: string | null, href: string) => {
+  if (href.startsWith("#")) {
+    return isHome(pathname) ? href : `/${href}`;
+  }
+  return href;
+};
 
 const footerLinks = {
   Product: [
@@ -19,6 +31,7 @@ const footerLinks = {
 };
 
 export function Footer() {
+  const pathname = usePathname();
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto max-w-7xl px-6 py-16">
@@ -48,7 +61,7 @@ export function Footer() {
                 {links.map((link) => (
                   <li key={link.label}>
                     <Link
-                      href={link.href}
+                      href={resolveHref(pathname, link.href)}
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                     >
                       {link.label}

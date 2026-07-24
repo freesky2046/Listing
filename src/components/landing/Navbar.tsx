@@ -1,9 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
+
+const isHome = (pathname: string | null) => pathname === "/";
+
+const resolveHref = (pathname: string | null, hash: string) =>
+  isHome(pathname) ? hash : `/${hash}`;
 
 const navLinks = [
   { href: "#features", label: "Features" },
@@ -13,6 +19,7 @@ const navLinks = [
 ];
 
 export function Navbar({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   return (
@@ -31,7 +38,7 @@ export function Navbar({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
           {navLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={resolveHref(pathname, link.href)}
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               {link.label}
@@ -81,7 +88,7 @@ export function Navbar({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
           {navLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={resolveHref(pathname, link.href)}
               className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => setOpen(false)}
             >
