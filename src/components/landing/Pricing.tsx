@@ -72,16 +72,17 @@ export function Pricing() {
                 anytime.
               </p>
             </div>
+          </div>
 
-            <div className="mt-16 grid gap-8 lg:grid-cols-3 lg:gap-6 max-w-5xl mx-auto">
-              {plans.map((plan) => (
-                <div
-                  key={plan.name}
-                  className={`relative flex flex-col rounded-xl border p-8 transition-all duration-150 ${
-                    plan.highlighted
-                      ? "border-primary bg-card shadow-sm lg:scale-105"
-                      : "border-border bg-card hover:border-primary/30 hover:bg-primary/[0.02]"
-                  }`}
+          <div className="mt-16 grid gap-8 lg:grid-cols-3 lg:gap-6 max-w-5xl mx-auto">
+            {plans.map((plan) => (
+              <div
+                key={plan.name}
+                className={`reveal-item relative flex flex-col rounded-xl border p-8 transition-all duration-150 ${
+                  plan.highlighted
+                    ? "border-primary bg-card shadow-sm lg:scale-105"
+                    : "border-border bg-card hover:border-primary/30 hover:bg-primary/[0.02]"
+                }`}
               >
                 {plan.highlighted && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -141,7 +142,6 @@ export function Pricing() {
                 )}
               </div>
             ))}
-          </div>
           </div>
         </ScrollReveal>
       </div>

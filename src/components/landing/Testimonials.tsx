@@ -44,7 +44,7 @@ export function Testimonials() {
             {testimonials.map((t) => (
               <div
                 key={t.author}
-                className="relative rounded-2xl border border-border/60 bg-gradient-to-br p-8 flex flex-col"
+                className="reveal-item relative rounded-2xl border border-border/60 bg-gradient-to-br p-8 flex flex-col"
                 style={{
                   backgroundImage: `linear-gradient(to bottom right, ${t.color.split(" ")[0].replace("from-", "var(--")}, ${t.color.split(" ")[1].replace("to-", "var(--")})`,
                 }}

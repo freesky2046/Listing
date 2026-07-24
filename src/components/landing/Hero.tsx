@@ -25,19 +25,19 @@ export function Hero({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
               </span>
             </div>
 
-            <h1 className="text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.15] tracking-[-0.02em] text-foreground [text-wrap:balance]">
+            <h1 className="text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.15] tracking-[-0.02em] text-foreground [text-wrap:balance] animate-reveal-up" style={{ animationDelay: "150ms" }}>
               Generate Amazon listings
               <br />
               <span className="text-primary">in seconds, not hours</span>
             </h1>
 
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground max-w-lg [text-wrap:pretty]">
+            <p className="mt-6 text-lg leading-relaxed text-muted-foreground max-w-lg [text-wrap:pretty] animate-reveal-up" style={{ animationDelay: "300ms" }}>
               Turn a few product details into a complete, high-converting Amazon
               listing — title, bullet points, description, and backend search
               terms. Optimized for the A9 algorithm.
             </p>
 
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 animate-reveal-up" style={{ animationDelay: "450ms" }}>
               {isLoggedIn ? (
                 <Link
                   href="/listing"
@@ -76,7 +76,7 @@ export function Hero({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
           </div>
 
           {/* Visual */}
-          <div className="relative lg:flex lg:justify-end">
+          <div className="relative lg:flex lg:justify-end animate-reveal-up" style={{ animationDelay: "600ms" }}>
             <div className="relative rounded-xl border border-border bg-card shadow-sm overflow-hidden">
               <div className="flex items-center gap-1.5 px-4 py-3 border-b border-border bg-secondary/50">
                 <div className="size-2.5 rounded-full bg-destructive/30" />

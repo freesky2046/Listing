@@ -124,8 +124,8 @@
 
 /* Scroll-reveal animations */
 @theme inline {
-  --animate-reveal-up: reveal-up 0.6s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) forwards;
-  --animate-reveal-fade: reveal-fade 0.5s ease-out forwards;
+  --animate-reveal-up: reveal-up 0.6s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+  --animate-reveal-fade: reveal-fade 0.5s ease-out both;
   --animate-count-up: count-up 1.5s ease-out forwards;
 }
 
@@ -147,7 +147,7 @@
 
 /* Stagger children inside a ScrollReveal */
 [data-visible="true"] .reveal-item {
-  animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
   opacity: 0;
 }
 
@@ -162,6 +162,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   [data-visible="true"] .reveal-item {
-    animation: reveal-fade 0.2s ease-out forwards;
+    animation: reveal-fade 0.2s ease-out both;
   }
 }

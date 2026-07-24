@@ -63,25 +63,25 @@ export function Features() {
                 of your Amazon listing, optimized for conversions.
               </p>
             </div>
+          </div>
 
-            <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {features.map((feature) => (
-                <div
-                  key={feature.title}
-                  className="group rounded-xl border border-border bg-card p-8 hover:border-primary/40 hover:bg-primary/[0.06] hover:shadow-md transition-all duration-200"
-                >
-                  <div className="inline-flex size-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <feature.icon className="size-5" />
-                  </div>
-                  <h3 className="mt-5 text-base font-semibold text-foreground">
-                    {feature.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    {feature.description}
-                  </p>
+          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map((feature) => (
+              <div
+                key={feature.title}
+                className="reveal-item group rounded-xl border border-border bg-card p-8 hover:border-primary/40 hover:bg-primary/[0.06] hover:shadow-md transition-all duration-200"
+              >
+                <div className="inline-flex size-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <feature.icon className="size-5" />
                 </div>
-              ))}
-            </div>
+                <h3 className="mt-5 text-base font-semibold text-foreground">
+                  {feature.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
           </div>
         </ScrollReveal>
       </div>
