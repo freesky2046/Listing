@@ -43,10 +43,8 @@ export function HowItWorks() {
               generate, publish.
             </p>
           </div>
-        </ScrollReveal>
 
-        <ScrollReveal>
-          <div className="reveal-item mt-16 grid gap-6 sm:grid-cols-3">
+          <div className="mt-16 grid gap-6 sm:grid-cols-3">
             {steps.map((step, i) => (
               <div
                 key={step.number}
