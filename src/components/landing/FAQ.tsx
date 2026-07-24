@@ -78,13 +78,14 @@ export function FAQ() {
                 />
               </button>
               <div
-                className={`overflow-hidden transition-all duration-200 ${
-                  openIndex === index ? "max-h-96 pb-4" : "max-h-0"
-                }`}
+                className="grid transition-[grid-template-rows] duration-200"
+                style={{ gridTemplateRows: openIndex === index ? "1fr" : "0fr" }}
               >
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {faq.answer}
-                </p>
+                <div className="overflow-hidden">
+                  <p className="text-sm text-muted-foreground leading-relaxed pb-4">
+                    {faq.answer}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
