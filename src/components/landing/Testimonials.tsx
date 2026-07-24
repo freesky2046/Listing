@@ -26,7 +26,7 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section className="py-24 sm:py-32 bg-card">
+    <section className="pt-24 sm:pt-32 pb-12 sm:pb-16 bg-card">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
           <div className="text-center reveal-item">

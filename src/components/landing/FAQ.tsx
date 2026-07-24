@@ -50,7 +50,7 @@ export function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-24 sm:py-32 bg-card">
+    <section id="faq" className="pt-12 sm:pt-16 pb-24 sm:pb-32 bg-card">
       <div className="mx-auto max-w-3xl px-6">
         <ScrollReveal>
           <div className="reveal-item text-center">
