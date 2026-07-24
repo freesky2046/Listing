@@ -1,16 +1,28 @@
 import Link from "next/link";
-import { ArrowRight, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Star } from "lucide-react";
 
 export function Hero({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-primary/[0.03] via-primary/[0.01] to-transparent">
+    <section className="relative overflow-hidden bg-gradient-to-b from-primary/[0.04] via-primary/[0.01] to-transparent">
+      {/* Background glow */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/3" />
+
       <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 sm:pt-32 sm:pb-28 lg:pt-40 lg:pb-32">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text */}
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm text-muted-foreground mb-8">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm text-muted-foreground mb-8 animate-reveal-up">
               <Sparkles className="size-3.5 text-accent" />
               AI-Powered Listing Generator
+              <span className="text-border">|</span>
+              <span className="flex items-center gap-1">
+                <Star className="size-3 text-warning fill-warning" />
+                <Star className="size-3 text-warning fill-warning" />
+                <Star className="size-3 text-warning fill-warning" />
+                <Star className="size-3 text-warning fill-warning" />
+                <Star className="size-3 text-warning fill-warning" />
+                <span className="text-xs text-muted-foreground ml-1">4.9/5</span>
+              </span>
             </div>
 
             <h1 className="text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.15] tracking-[-0.02em] text-foreground [text-wrap:balance]">
@@ -37,7 +49,7 @@ export function Hero({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
               ) : (
                 <Link
                   href="/listing"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground text-base font-medium px-8 h-12 hover:opacity-90 transition-all duration-150"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground text-base font-medium px-8 h-12 hover:opacity-90 transition-all duration-150 shadow-lg shadow-primary/20"
                 >
                   Generate Your First Listing
                   <ArrowRight className="size-4" />
@@ -117,7 +129,7 @@ export function Hero({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
               </div>
             </div>
 
-            {/* Decorative elements */}
+            {/* Decorative glows */}
             <div className="absolute -top-6 -right-6 size-24 rounded-full bg-primary/5 blur-2xl pointer-events-none" />
             <div className="absolute -bottom-8 -left-8 size-32 rounded-full bg-accent/5 blur-3xl pointer-events-none" />
           </div>

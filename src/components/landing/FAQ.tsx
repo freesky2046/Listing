@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { ScrollReveal } from "./ScrollReveal";
 
 const faqs = [
   {
@@ -51,45 +52,49 @@ export function FAQ() {
   return (
     <section id="faq" className="py-24 sm:py-32 bg-card">
       <div className="mx-auto max-w-3xl px-6">
-        <div className="text-center">
-          <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-semibold tracking-[-0.015em] text-foreground [text-wrap:balance]">
-            Frequently asked{" "}
-            <span className="text-primary">questions</span>
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground [text-wrap:pretty]">
-            Everything you need to know about ListGen.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="reveal-item text-center">
+            <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-semibold tracking-[-0.015em] text-foreground [text-wrap:balance]">
+              Frequently asked{" "}
+              <span className="text-primary">questions</span>
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground [text-wrap:pretty]">
+              Everything you need to know about ListGen.
+            </p>
+          </div>
+        </ScrollReveal>
 
-        <div className="mt-12 divide-y divide-border">
-          {faqs.map((faq, index) => (
-            <div key={index} className="py-1">
-              <button
-                onClick={() => toggle(index)}
-                className="w-full flex items-center justify-between gap-4 py-4 text-left group"
-              >
-                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                  {faq.question}
-                </span>
-                <ChevronDown
-                  className={`size-5 shrink-0 text-muted-foreground transition-transform duration-200 ${
-                    openIndex === index ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              <div
-                className="grid transition-[grid-template-rows] duration-200"
-                style={{ gridTemplateRows: openIndex === index ? "1fr" : "0fr" }}
-              >
-                <div className="overflow-hidden">
-                  <p className="text-sm text-muted-foreground leading-relaxed pb-4">
-                    {faq.answer}
-                  </p>
+        <ScrollReveal staggerDelay={80}>
+          <div className="mt-12 divide-y divide-border">
+            {faqs.map((faq, index) => (
+              <div key={index} className="reveal-item py-1">
+                <button
+                  onClick={() => toggle(index)}
+                  className="w-full flex items-center justify-between gap-4 py-4 text-left group"
+                >
+                  <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                    {faq.question}
+                  </span>
+                  <ChevronDown
+                    className={`size-5 shrink-0 text-muted-foreground transition-transform duration-200 ${
+                      openIndex === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <div
+                  className="grid transition-[grid-template-rows] duration-200"
+                  style={{ gridTemplateRows: openIndex === index ? "1fr" : "0fr" }}
+                >
+                  <div className="overflow-hidden">
+                    <p className="text-sm text-muted-foreground leading-relaxed pb-4">
+                      {faq.answer}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

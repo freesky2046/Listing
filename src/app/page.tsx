@@ -1,8 +1,10 @@
 import { Navbar } from "@/components/landing/Navbar";
 import { Hero } from "@/components/landing/Hero";
+import { Stats } from "@/components/landing/Stats";
 import { Features } from "@/components/landing/Features";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { Pricing } from "@/components/landing/Pricing";
+import { Testimonials } from "@/components/landing/Testimonials";
 import { FAQ } from "@/components/landing/FAQ";
 import { CTASection } from "@/components/landing/CTA";
 import { Footer } from "@/components/landing/Footer";
@@ -22,9 +24,11 @@ export default async function Home() {
       <Navbar isLoggedIn={isLoggedIn} />
       <main className="flex-1">
         <Hero isLoggedIn={isLoggedIn} />
+        <Stats />
         <Features />
         <HowItWorks />
         {!hasActivePlan && <Pricing />}
+        <Testimonials />
         <FAQ />
         <CTASection hasActivePlan={hasActivePlan} />
       </main>

@@ -118,5 +118,50 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Scroll-reveal animations */
+@theme inline {
+  --animate-reveal-up: reveal-up 0.6s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) forwards;
+  --animate-reveal-fade: reveal-fade 0.5s ease-out forwards;
+  --animate-count-up: count-up 1.5s ease-out forwards;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Stagger children inside a ScrollReveal */
+[data-visible="true"] .reveal-item {
+  animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+[data-visible="true"] .reveal-item:nth-child(1) { animation-delay: calc(var(--stagger-delay, 100ms) * 0); }
+[data-visible="true"] .reveal-item:nth-child(2) { animation-delay: calc(var(--stagger-delay, 100ms) * 1); }
+[data-visible="true"] .reveal-item:nth-child(3) { animation-delay: calc(var(--stagger-delay, 100ms) * 2); }
+[data-visible="true"] .reveal-item:nth-child(4) { animation-delay: calc(var(--stagger-delay, 100ms) * 3); }
+[data-visible="true"] .reveal-item:nth-child(5) { animation-delay: calc(var(--stagger-delay, 100ms) * 4); }
+[data-visible="true"] .reveal-item:nth-child(6) { animation-delay: calc(var(--stagger-delay, 100ms) * 5); }
+[data-visible="true"] .reveal-item:nth-child(7) { animation-delay: calc(var(--stagger-delay, 100ms) * 6); }
+[data-visible="true"] .reveal-item:nth-child(8) { animation-delay: calc(var(--stagger-delay, 100ms) * 7); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-visible="true"] .reveal-item {
+    animation: reveal-fade 0.2s ease-out forwards;
   }
 }
