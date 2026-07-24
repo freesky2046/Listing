@@ -45,12 +45,12 @@ export function HowItWorks() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal staggerDelay={150}>
-          <div className="mt-16 grid gap-6 sm:grid-cols-3">
+        <ScrollReveal>
+          <div className="reveal-item mt-16 grid gap-6 sm:grid-cols-3">
             {steps.map((step, i) => (
               <div
                 key={step.number}
-                className="reveal-item group relative rounded-2xl border border-border/60 bg-card p-8 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/[0.04] transition-all duration-200"
+                className="group relative rounded-2xl border border-border/60 bg-card p-8 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/[0.04] transition-all duration-200"
               >
                 {/* Step number — top-right watermark */}
                 <div className="absolute top-4 right-5 text-6xl font-bold text-muted/20 select-none pointer-events-none tabular-nums">
