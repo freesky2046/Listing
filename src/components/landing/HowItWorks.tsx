@@ -1,4 +1,4 @@
-import { ClipboardList, Sparkles, Rocket } from "lucide-react";
+import { ClipboardList, Sparkles, Rocket, ArrowRight } from "lucide-react";
 
 const steps = [
   {
@@ -26,8 +26,11 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 sm:py-32 bg-card">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="how-it-works" className="relative py-24 sm:py-32 overflow-hidden">
+      {/* Subtle gradient backdrop */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] via-card to-primary/[0.02] pointer-events-none" />
+
+      <div className="relative mx-auto max-w-7xl px-6">
         <div className="text-center max-w-2xl mx-auto">
           <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-semibold tracking-[-0.015em] text-foreground [text-wrap:balance]">
             Three steps to a{" "}
@@ -39,30 +42,34 @@ export function HowItWorks() {
           </p>
         </div>
 
-        <div className="mt-16 grid gap-8 sm:grid-cols-3">
+        <div className="mt-16 grid gap-6 sm:grid-cols-3">
           {steps.map((step, i) => (
-            <div key={step.number} className="relative text-center">
-              {/* Connector line (hidden on mobile) */}
-              {i < steps.length - 1 && (
-                <div className="hidden sm:block absolute top-10 left-[calc(50%+2.5rem)] w-[calc(100%-5rem)] h-px bg-border">
-                  <div className="absolute right-0 -top-[3px] size-2 rotate-45 border-r border-t border-border" />
-                </div>
-              )}
-
-              <div className="inline-flex size-20 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6">
-                <step.icon className="size-8" />
-              </div>
-
-              <div className="inline-flex items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-semibold px-3 py-1 mb-3">
+            <div
+              key={step.number}
+              className="group relative rounded-2xl border border-border/60 bg-card p-8 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/[0.04] transition-all duration-200"
+            >
+              {/* Step number — top-right watermark */}
+              <div className="absolute top-4 right-5 text-6xl font-bold text-muted/20 select-none pointer-events-none tabular-nums">
                 {step.number}
               </div>
 
-              <h3 className="text-base font-semibold text-foreground">
+              {/* Icon with glow */}
+              <div className="relative inline-flex size-14 items-center justify-center rounded-xl bg-primary/10 text-primary mb-6">
+                <div className="absolute inset-0 rounded-xl bg-primary/15 blur-md scale-75" />
+                <step.icon className="relative size-6" />
+              </div>
+
+              <h3 className="text-base font-semibold text-foreground group-hover:text-primary transition-colors duration-200">
                 {step.title}
               </h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                 {step.description}
               </p>
+
+              {/* Connector arrow (not last) */}
+              {i < steps.length - 1 && (
+                <ArrowRight className="hidden sm:block absolute -right-4 top-1/2 -translate-y-1/2 size-5 text-border group-hover:text-primary/40 transition-colors duration-200" />
+              )}
             </div>
           ))}
         </div>
