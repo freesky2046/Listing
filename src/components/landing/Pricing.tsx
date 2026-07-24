@@ -142,6 +142,7 @@ export function Pricing() {
               </div>
             ))}
           </div>
+          </div>
         </ScrollReveal>
       </div>
     </section>
