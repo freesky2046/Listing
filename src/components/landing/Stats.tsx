@@ -58,9 +58,9 @@ export function Stats() {
     <section className="py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
-          <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-4">
+          <div className="reveal-item grid grid-cols-2 gap-y-10 sm:grid-cols-4">
             {stats.map((stat) => (
-              <div key={stat.label} className="reveal-item text-center">
+              <div key={stat.label} className="text-center">
                 <div className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">
                   <CountUp target={stat.value} suffix={stat.suffix} />
                 </div>

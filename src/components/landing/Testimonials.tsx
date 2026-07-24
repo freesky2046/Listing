@@ -29,7 +29,7 @@ export function Testimonials() {
     <section className="pt-24 sm:pt-32 pb-12 sm:pb-16 bg-card">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
-          <div className="text-center reveal-item">
+          <div className="reveal-item text-center">
             <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-semibold tracking-[-0.015em] text-foreground [text-wrap:balance]">
               Trusted by{" "}
               <span className="text-primary">thousands</span> of sellers
@@ -39,14 +39,12 @@ export function Testimonials() {
               ListGen every day.
             </p>
           </div>
-        </ScrollReveal>
 
-        <ScrollReveal staggerDelay={120}>
           <div className="mt-16 grid gap-8 md:grid-cols-3">
             {testimonials.map((t) => (
               <div
                 key={t.author}
-                className="reveal-item relative rounded-2xl border border-border/60 bg-gradient-to-br p-8 flex flex-col"
+                className="relative rounded-2xl border border-border/60 bg-gradient-to-br p-8 flex flex-col"
                 style={{
                   backgroundImage: `linear-gradient(to bottom right, ${t.color.split(" ")[0].replace("from-", "var(--")}, ${t.color.split(" ")[1].replace("to-", "var(--")})`,
                 }}

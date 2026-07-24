@@ -61,28 +61,27 @@ export function Pricing() {
     <section id="pricing" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
-          <div className="reveal-item text-center max-w-2xl mx-auto">
-            <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-semibold tracking-[-0.015em] text-foreground [text-wrap:balance]">
-              Simple,{" "}
-              <span className="text-primary">transparent</span> pricing
-            </h2>
-            <p className="mt-4 text-lg text-muted-foreground [text-wrap:pretty]">
-              Start free, upgrade when you need more. No hidden fees, cancel
-              anytime.
-            </p>
-          </div>
-        </ScrollReveal>
+          <div className="reveal-item">
+            <div className="text-center max-w-2xl mx-auto">
+              <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-semibold tracking-[-0.015em] text-foreground [text-wrap:balance]">
+                Simple,{" "}
+                <span className="text-primary">transparent</span> pricing
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground [text-wrap:pretty]">
+                Start free, upgrade when you need more. No hidden fees, cancel
+                anytime.
+              </p>
+            </div>
 
-        <ScrollReveal>
-          <div className="reveal-item mt-16 grid gap-8 lg:grid-cols-3 lg:gap-6 max-w-5xl mx-auto">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`relative flex flex-col rounded-xl border p-8 transition-all duration-150 ${
-                  plan.highlighted
-                    ? "border-primary bg-card shadow-sm lg:scale-105"
-                    : "border-border bg-card hover:border-primary/30 hover:bg-primary/[0.02]"
-                }`}
+            <div className="mt-16 grid gap-8 lg:grid-cols-3 lg:gap-6 max-w-5xl mx-auto">
+              {plans.map((plan) => (
+                <div
+                  key={plan.name}
+                  className={`relative flex flex-col rounded-xl border p-8 transition-all duration-150 ${
+                    plan.highlighted
+                      ? "border-primary bg-card shadow-sm lg:scale-105"
+                      : "border-border bg-card hover:border-primary/30 hover:bg-primary/[0.02]"
+                  }`}
               >
                 {plan.highlighted && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">

@@ -64,7 +64,7 @@ export function FAQ() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal staggerDelay={80}>
+        <ScrollReveal staggerDelay={60}>
           <div className="mt-12 divide-y divide-border">
             {faqs.map((faq, index) => (
               <div key={index} className="reveal-item py-1">
